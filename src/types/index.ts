@@ -6,6 +6,9 @@ export type IUser = {
   email: string;
   imageUrl: string;
   bio: string;
+  emailVerified: boolean;
+  
+
 };
 
 export type IContextType={
@@ -30,6 +33,11 @@ export type INavLink = {
     imageId: string;
     imageUrl: URL | string;
     file: File[];
+   
+  };
+  export type IUpdateVerifiedUser = {
+    userId: string;
+    emailVerified:boolean;
   };
   
   export type INewPost = {

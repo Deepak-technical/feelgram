@@ -1,8 +1,10 @@
 import React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
 import { IContextType, IUser } from "@/types";
-import { getCurrentUser } from "@/lib/appwrite/api";
+import { getAccount, getCurrentUser } from "@/lib/appwrite/api";
 import { useNavigate } from "react-router-dom";
+import updateVerifiedUser from "@/lib/appwrite/api";
+
 export const INITIAL_USER = {
   id: "",
   name: "",
@@ -10,6 +12,7 @@ export const INITIAL_USER = {
   email: "",
   imageUrl: "",
   bio: "",
+  emailVerified:"",
 };
 
 const INITIAL_STATE = {
@@ -27,13 +30,40 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState<IUser>(INITIAL_USER);
+  console.log("curernt context",user)
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const checkAuthUser = async () => {
     setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
-      if (currentAccount) {
+      const data=await getAccount();
+
+      if (currentAccount && data) {
+        console.log("currentAccount", currentAccount);
+        console.log("currentData", data);
+        console.log("Hello, verified");
+      
+        const shouldUpdateEmailVerification = currentAccount.emailVerified === false && data.emailVerification === true;
+      
+        const updateUserData = {
+          userId: currentAccount.$id,
+          emailVerified: data.emailVerification
+        };
+      
+        const updatedUser = await updateVerifiedUser(updateUserData);
+      
+        const updateMessage = updatedUser ? `Updated user: ${updatedUser}` : "User not updated";
+      
+        if (shouldUpdateEmailVerification) {
+          console.log(updateMessage);
+        } else {
+          console.log("User already verified");
+          console.log(updateMessage);
+        }
+      
+      
+      
         setUser({
           id: currentAccount.$id,
           name: currentAccount.name,
@@ -41,6 +71,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           email: currentAccount.email,
           imageUrl: currentAccount.imageUrl,
           bio: currentAccount.bio,
+          emailVerified:currentAccount.emailVerified,
         });
         setIsAuthenticated(true);
 

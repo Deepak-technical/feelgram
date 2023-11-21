@@ -1,7 +1,8 @@
-import { INewUser, INewPost,IUpdatePost } from "@/types";
+import { INewUser, INewPost,IUpdatePost, IUpdateUser,IUpdateVerifiedUser } from "@/types";
 import { ID, Query } from "appwrite";
 import { account, avatars } from "./config";
 import { appwriteConfig, databases, storage } from "./config";
+import { error } from "console";
 export async function createUserAccount(user: INewUser) {
   try {
     const newAccount = await account.create(
@@ -20,6 +21,7 @@ export async function createUserAccount(user: INewUser) {
       email: newAccount.email,
       username: user.username,
       imageUrl: avatarUrl,
+      
     });
     return newUser;
   } catch (error) {
@@ -63,7 +65,7 @@ export async function getCurrentUser() {
     const currentAccount = await account.get();
 
     if (!currentAccount) throw Error;
-
+    console.log("currentAccount", currentAccount)
     const currentUser = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
@@ -118,6 +120,7 @@ export async function createPost(post: INewPost) {
         ImageId: uploadedFile.$id,
         location: post.location,
         tags: tags,
+        
       }
     );
 
@@ -339,7 +342,7 @@ export async function getUserById(userId: string) {
     );
 
     if (!user) throw Error;
-
+    
     return user;
   } catch (error) {
     console.log(error);
@@ -381,7 +384,7 @@ export async function searchPosts(searchTerm: string) {
     const posts = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
-      [Query.search("caption", searchTerm)]
+      [Query.search("captiom", searchTerm)]
     );
 
     if (!posts) throw Error;
@@ -490,4 +493,30 @@ export async function updateUser(user: IUpdateUser) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export default async function updateVerifiedUser(user: IUpdateVerifiedUser ){
+
+  try {
+    const currentStatus= await account.get();
+    
+      const updatedUser = await databases.updateDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.userCollectionId,
+        user.userId,
+        {
+        emailVerified:currentStatus.emailVerification
+        }
+      );
+      console.log("updated user in api: " + updatedUser)
+      if (!updatedUser) {
+        throw Error
+      }
+      return  updatedUser;
+   
+    
+  } catch (error) {
+    console.log(error)
+  }
+
 }

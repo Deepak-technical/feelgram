@@ -30,9 +30,19 @@ const PostCard = ({ post }: PostCardProps) => {
           </Link>
 
           <div className="flex flex-col">
+          
+            <div className='inline-flex items-center gap-2'>
             <p className="base-medium lg:body-bold text-light-1">
               {post.creator.name}
+
             </p>
+              {post.creator.emailVerified ? (
+                <p>
+                <img src='/assets/icons/tick.png' height={28} width={28} /></p>
+              ) : (
+                <></>
+              )}</div>
+            
             <div className="flex-center gap-2 text-light-3">
               <p className="subtle-semibold lg:small-regular ">
                 {multiFormatDateString(post.$createdAt)}
@@ -59,8 +69,8 @@ const PostCard = ({ post }: PostCardProps) => {
 
       <Link to={`/posts/${post.$id}`}>
         <div className="small-medium lg:base-medium py-5">
-        <p>{post?.captiom}</p>
-          <p>{post.caption}</p>
+        
+          <p>{post.captiom}</p>
           <ul className="flex gap-1 mt-2">
             {post.tags.map((tag: string, index: string) => (
               <li key={`${tag}${index}`} className="text-light-3 small-regular">
