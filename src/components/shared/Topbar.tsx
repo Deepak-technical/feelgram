@@ -16,13 +16,13 @@ const Topbar = () => {
 
   return (
     <section className="topbar">
-      <div className="flex-between py-4 px-5">
+      <div className="flex-between py-2 px-5">
         <Link to="/" className="flex gap-3 items-center">
           <img
             src="/assets/images/finallogo.png"
             alt="logo"
-            width={200}
-            height={325}
+            width={180}
+            height={320}
           />
         </Link>
 
