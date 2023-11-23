@@ -19,8 +19,8 @@ const Bottombar = () => {
             <img
               src={link.imgURL}
               alt={link.label}
-              width={28}
-              height={28}
+              width={24}
+              height={24}
               className={`${isActive && "invert-white"}`}
             />
 
