@@ -8,22 +8,39 @@ import { useUserContext } from '@/context/AuthContext'
 import { useDeletePost } from '@/lib/react-query/queriesAndMutations'
 import { useNavigate } from 'react-router-dom'
 import PostStats from '@/components/shared/PostStats'
+import { useToast } from '@/components/ui/use-toast'
 const PostDetails = () => {
-  const { id } = useParams()
-  const { data: post, isPending } = useGetPostById(id || '')
+  const { id } = useParams();
+
+  const { toast } = useToast()
+  const { data: post,isLoading:isPending} = useGetPostById(id || '')
   const { user } = useUserContext()
   const { mutate: deletePost } = useDeletePost()
   const navigate = useNavigate()
   const handleDeletePost = () => {
-    console.log('Delete post')
+    console.log('Delete post', id)
+    console.log('Delete post', post?.imageId)
+
+    if(id){
+
     deletePost({ postId: id, imageId: post?.imageId })
-    navigate(-1)
+    }
+
+    toast({
+      title: 'Post Deleted Successfully'
+    })
+
+    // Add a delay of, for example, 2000 milliseconds (2 seconds) after showing the toast message
+    setTimeout(() => {
+      // Perform any subsequent actions after the delay
+      navigate(-1)
+    }, 2000)
   }
 
   return (
     <>
       <div className='post_details-container'>
-        {isPending ||!post  ? (
+        {isPending || !post ? (
           <Loader />
         ) : (
           <>
@@ -104,9 +121,9 @@ const PostDetails = () => {
                     ))}
                   </ul>
                 </div>
-                <div className="w-full">
-                <PostStats post={post} userId={user.id} />
-            </div>
+                <div className='w-full'>
+                  <PostStats post={post} userId={user.id} />
+                </div>
               </div>
             </div>
           </>

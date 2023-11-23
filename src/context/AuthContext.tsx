@@ -1,6 +1,6 @@
 import React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
-import { IContextType, IUser } from "@/types";
+import {  IUser } from "@/types";
 import { getAccount, getCurrentUser } from "@/lib/appwrite/api";
 import { useNavigate } from "react-router-dom";
 import updateVerifiedUser from "@/lib/appwrite/api";
@@ -12,9 +12,19 @@ export const INITIAL_USER = {
   email: "",
   imageUrl: "",
   bio: "",
-  emailVerified:"",
+  emailVerified:false,
+  following: [],
+  followers: [],
 };
 
+type IContextType = {
+  user: IUser;
+  isLoading: boolean;
+  setUser: React.Dispatch<React.SetStateAction<IUser>>;
+  isAuthenticated: boolean;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  checkAuthUser: () => Promise<boolean>;
+};
 const INITIAL_STATE = {
   user: INITIAL_USER,
   isLoading: false,
@@ -40,9 +50,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const data=await getAccount();
 
       if (currentAccount && data) {
-        console.log("currentAccount", currentAccount);
-        console.log("currentData", data);
-        console.log("Hello, verified");
       
         const shouldUpdateEmailVerification = currentAccount.emailVerified === false && data.emailVerification === true;
       
@@ -59,7 +66,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           console.log(updateMessage);
         } else {
           console.log("User already verified");
-          console.log(updateMessage);
+          // console.log(updateMessage);
         }
       
       
@@ -72,6 +79,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           imageUrl: currentAccount.imageUrl,
           bio: currentAccount.bio,
           emailVerified:currentAccount.emailVerified,
+          following:currentAccount.following,
+          followers:currentAccount.followers,
         });
         setIsAuthenticated(true);
 
@@ -82,6 +91,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error) {
       console.error(error);
       return false;
+      
     } finally {
       setIsLoading(false);
     }

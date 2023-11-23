@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-query";
 
 import { createUserAccount,signInAccount,signOutAccount,createPost,getRecentPosts, likePost,savePost,deleteSavedPost,getCurrentUser,getUserById,getPostById,updatePost,deletePost,searchPosts,getInfinitePosts,getUsers,updateUser,getAccount} from "../appwrite/api";
-import { INewUser,INewPost,IUpdateUser } from "@/types";
+import { INewUser,INewPost,IUpdateUser,IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
 
 export const useCreateuserAccount = () => {
@@ -155,7 +155,7 @@ export const useUpdatePost = () => {
 export const useDeletePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ postId, imageId }: { postId?: string; imageId: string }) =>
+    mutationFn: ({ postId, imageId }: { postId: string; imageId: string }) =>
       deletePost(postId, imageId),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -197,7 +197,7 @@ export const useGetUsers = (limit?: number) => {
     queryFn: () => getUsers(limit),
   });
 };
-export const useGetAccount = (limit?: number) => {
+export const useGetAccount = () => {
   return useQuery({
   
     queryFn: () => getAccount(),

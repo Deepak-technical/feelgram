@@ -57,7 +57,7 @@ const PostForm = ({ post,action }: PostFormProps) => {
         const updatedPost = await updatePost({
           ...value,
           postId: post.$id,
-          ImageId: post.imageId,
+          imageId: post.imageId,
           imageUrl: post.imageUrl,
         });
   

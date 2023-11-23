@@ -6,7 +6,7 @@ import Loader from './Loader'
 import { Button } from '@/components/ui/button'
 import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations'
 import { useUserContext, INITIAL_USER } from '@/context/AuthContext'
-import { useGetAccount } from '@/lib/react-query/queriesAndMutations'
+
 
 const LeftSidebar = () => {
   const navigate = useNavigate()
@@ -29,13 +29,13 @@ const LeftSidebar = () => {
 
   return (
     <nav className='leftsidebar'>
-      <div className='flex flex-col gap-11'>
+      <div className='flex flex-col gap-6'>
         <Link to='/' className='flex gap-3 items-center'>
           <img
-            src='/assets/images/logo.svg'
+            src='/assets/images/finallogo.png'
             alt='logo'
-            width={170}
-            height={36}
+            width={220}
+            height={56}
           />
         </Link>
 
@@ -44,11 +44,11 @@ const LeftSidebar = () => {
             <Loader />
           </div>
         ) : (
-          <Link to={`/profile/${user.id}`} className='flex gap-3 items-center'>
+          <Link to={`/profile/${user.id}`} className='flex flex-col gap-3 items-center justify-center'>
             <img
               src={user.imageUrl || '/assets/icons/profile-placeholder.svg'}
               alt='profile'
-              className='h-14 w-14 rounded-full'
+              className='h-28 w-28 rounded-full border-[3px] border-pink-500 p-1'
             />
 
             <div className='flex flex-col'>
@@ -61,12 +61,13 @@ const LeftSidebar = () => {
                 <></>
               )}</div>
 
-              <p className='small-regular text-light-3'>@{user.username}</p>
+              <p className='small-regular text-light-2 text-center py-1'>@{user.username}</p>
+             
             </div>
           </Link>
         )}
 
-        <ul className='flex flex-col gap-6'>
+        <ul className='flex flex-col gap-2'>
           {sidebarLinks.map((link: INavLink) => {
             const isActive = pathname === link.route
 

@@ -2,7 +2,7 @@ import { INewUser, INewPost,IUpdatePost, IUpdateUser,IUpdateVerifiedUser } from 
 import { ID, Query } from "appwrite";
 import { account, avatars } from "./config";
 import { appwriteConfig, databases, storage } from "./config";
-import { error } from "console";
+
 export async function createUserAccount(user: INewUser) {
   try {
     const newAccount = await account.create(
@@ -65,7 +65,7 @@ export async function getCurrentUser() {
     const currentAccount = await account.get();
 
     if (!currentAccount) throw Error;
-    console.log("currentAccount", currentAccount)
+    // console.log("currentAccount", currentAccount)
     const currentUser = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
@@ -214,6 +214,46 @@ export async function likePost(postId: string, likesArray: string[]) {
     console.log(error);
   }
 }
+export async function followUser(userId: string, followingUsers: string[]) {
+  try {
+    console.log("following started")
+    const followUser = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      userId,
+      {
+        following:followingUsers
+      }
+    );
+
+    if(!followUser) throw Error;
+    console.log("follow")
+    console.log(followUser);
+    return  followUser;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function setFollowersList(userId: string, followingUsers: string[]) {
+  try {
+    console.log("following started")
+    const followUser = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      userId,
+      {
+        followers:followingUsers
+      }
+    );
+
+    if(!followUser) throw Error;
+    console.log("follow")
+    console.log(followUser);
+    return  followUser;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function savePost(userId: string, postId: string) {
   try {
@@ -348,8 +388,8 @@ export async function getUserById(userId: string) {
     console.log(error);
   }
 }
-export async function deletePost(postId?: string, imageId?: string) {
-  if (!postId || !imageId) return;
+export async function deletePost(postId: string, imageId: string) {
+  // if (!postId || !imageId) console.log("no data to delete");
 
   try {
     console.log("delete post stated")
@@ -362,8 +402,8 @@ export async function deletePost(postId?: string, imageId?: string) {
     if (!statusCode) throw Error;
     console.log("Delete post")
     await deleteFile(imageId);
-
-    return { status: "Ok" };
+    console.log(statusCode)
+    return { message:"deleted"};
   } catch (error) {
     console.log(error);
   }
@@ -508,7 +548,7 @@ export default async function updateVerifiedUser(user: IUpdateVerifiedUser ){
         emailVerified:currentStatus.emailVerification
         }
       );
-      console.log("updated user in api: " + updatedUser)
+      // console.log("updated user in api: " + updatedUser)
       if (!updatedUser) {
         throw Error
       }

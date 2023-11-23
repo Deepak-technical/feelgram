@@ -7,18 +7,20 @@ export type IUser = {
   imageUrl: string;
   bio: string;
   emailVerified: boolean;
+  following?:any;
+  followers?:any;
   
 
 };
 
-export type IContextType={
-  user:IUser,
-  isLoading:boolean;
-  setUser:React.Dispatch<React.SetStateAction<IUser>>;
-  isAuthenticated:boolean;
-  setIsAuthenticated:React.Dispatch<React.SetStateAction<boolean>>;
-  checkAuthUser:()=>Promise<boolean>;
-}
+export type IContextType = {
+  user: IUser,
+  isLoading: boolean;
+  setUser: React.Dispatch<React.SetStateAction<IUser>>;
+  isAuthenticated: boolean;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  checkAuthUser: () => Promise<boolean>;
+};
 
 export type INavLink = {
     imgURL: string;
