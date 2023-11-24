@@ -1,36 +1,45 @@
-import Loader from "@/components/shared/Loader";
+import Loader from '@/components/shared/Loader'
 
-import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
-import { Models } from "appwrite";
-import PostCard from "@/components/shared/PostCard";
+import { useGetRecentPosts } from '@/lib/react-query/queriesAndMutations'
+import { Models } from 'appwrite'
+import PostCard from '@/components/shared/PostCard'
+import { useGetUsers } from '@/lib/react-query/queriesAndMutations'
+
 const Home = () => {
-  const {
-    data: posts,
-    isLoading: isPostLoading,
-    
-  } = useGetRecentPosts();
+  const { data: posts, isLoading: isPostLoading } = useGetRecentPosts()
+  const { data: creators, isLoading, isError: isErrorCreators } = useGetUsers()
 
   return (
     <>
-      <div className="flex flex-1">
-        <div className="home-container">
-          <div className="home-posts">
-            <h2 className="h3-bold md:h2-bold text-left w-full">Home Feed</h2>
+      <div className='flex flex-1'>
+        <div className='home-container'>
+          <div className='home-posts'>
+      
+            
 
             {isPostLoading && !posts ? (
               <Loader />
-            ) : (
-              <ul className="flex flex-col flex-1 gap-9 w-full">
-                {posts?.documents.map((post:Models.Document)=>(
-                  <PostCard post={post}/>
+            ) : (<>
+                <h2 className='h3-bold md:h2-semibold text-left w-full'>Stories</h2>
+            <div className='flex flex-row gap-x-4 overflow-scroll custom-scrollbar pb-4'>
+              {creators?.documents.map((post: Models.Document) => (
+                
+                <img src={post.imageUrl} className='rounded-full h-12 w-12 md:h-16 md:w-16 border-2 p-1 border-pink-400' />
+              ))}
+            </div>
+              <h2 className='h3-bold md:h2-bold text-left w-full'>Home Feed</h2>
+              <ul className='flex flex-col flex-1 gap-9 w-full'>
+                {posts?.documents.map((post: Models.Document) => (
+                  <PostCard post={post} />
                 ))}
               </ul>
+              </>
             )}
           </div>
         </div>
-      </div>{" "}
+      </div>{' '}
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
