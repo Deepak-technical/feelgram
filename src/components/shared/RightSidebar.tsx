@@ -1,5 +1,5 @@
 import { useToast } from '../ui/use-toast'
-import { useGetUsers } from '@/lib/react-query/queriesAndMutations'
+import {  useGetUsers } from '@/lib/react-query/queriesAndMutations'
 import Loader from './Loader'
 import Suggested from './Suggested'
 import { useGetRecentPosts } from '@/lib/react-query/queriesAndMutations'
@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { Models } from 'appwrite'
 import { multiFormatDateString } from '@/lib/utils'
 
-const RightSidebar = () => {
+const RightSidebar =() => {
   const { toast } = useToast()
   const { data: posts, isLoading: isPostLoading } = useGetRecentPosts()
   const { data: creators, isLoading, isError: isErrorCreators } = useGetUsers()
@@ -19,14 +19,14 @@ const RightSidebar = () => {
     return
   }
 
-  const suggestedUsers = creators?.documents.slice(1, 4)
-  const trendingPosts = posts?.documents.filter(posts => posts.likes.length > 4)
+  const suggestedUsers = creators?.documents.slice(1, 3)
+  const trendingPosts = posts?.documents.filter(posts => posts.likes.length > 5)
   console.log(trendingPosts)
   return (
     <>
       <div className='hidden md:flex flex-col w-3/12'>
-        <div className='trending h-1/2 overflow-scroll custom-scrollbar'>
-          <h2 className='py-4 pl-8 text-left text-xl text-white font-semibold '>
+        <div className='trending h-7/12 overflow-scroll custom-scrollbar'>
+          <h2 className='pt-4 pl-8 text-center text-2xl text-white font-semibold '>
             Trending Posts
           </h2>
           {isPostLoading && !posts ? (
@@ -34,8 +34,8 @@ const RightSidebar = () => {
           ) : (
             <div className='flex flex-col  overflow-scroll custom-scrollbar m-2'>
               {posts?.documents.map((post: Models.Document) => (
-                <div className='border-2  border-dark-4 m-2 p-2'>
-                  <div className='flex-between '>
+                <div className='border-2  border-dark-4 m-2 py-3 rounded-lg'>
+                  <div className='flex-center '>
                     <div className='flex flex-row items-center gap-3'>
                       <Link to={`/profile/${post.creator.$id}`}>
                    
@@ -48,7 +48,7 @@ const RightSidebar = () => {
                               '/assets/icons/profile-placeholder.svg'
                             }
                             alt='creator'
-                            className='w-6 h-6 lg:h-6 rounded-full'
+                            className='w-8 h-8 lg:h-8 rounded-full'
                           />
                             
                             <p className='base-small lg:body-semibold text-light-1'>
@@ -80,7 +80,7 @@ const RightSidebar = () => {
                   </div>
 
                   <Link to={`/posts/${post.$id}`}>
-                    <div className=' lg:base-small py-2 pl-2 text-md'>
+                    <div className='text-sm py-2 pl-2 text-md text-center'>
                     {post.captiom.length > 36 ? `${post.captiom.slice(0, 36)}...` : post.captiom}
                     </div>
                   </Link>
@@ -89,7 +89,7 @@ const RightSidebar = () => {
             </div>
           )}
         </div>
-        <div className='suggest-users'>
+        <div className='suggest-users h-1/2'>
           <h2 className='py-4 pl-8 text-left text-xl text-white font-semibold '>
             Suggested Users
           </h2>

@@ -25,7 +25,7 @@ const Home = () => {
                   {creators?.documents.map((post: Models.Document) => (
                     <img
                       src={post.imageUrl}
-                      className='rounded-full h-12 w-12 md:h-16 md:w-16 border-2 p-1 border-pink-400'
+                      className='rounded-full h-16 w-16 md:h-16 md:w-16 border-2 p-1 border-pink-400'
                     />
                   ))}
                 </div>

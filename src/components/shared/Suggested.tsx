@@ -17,8 +17,8 @@ const Suggested = ({ user }: UserCardProps) => {
         className="rounded-full w-14 h-14 p-[2px] border-2 border-pink-600"
       />
 
-      <div className="flex flex-col pl-4 gap-1">
-        <p className="base-medium flex gap-x-4 text-light-1 text-left line-clamp-1">
+      <div className="flex flex-col  pl-4 gap-1">
+        <p className="base-medium  items-center flex gap-x-2 text-light-1 text-left line-clamp-1">
           {user.name}{user.emailVerified ? (
                 <p>
                 <img src='/assets/icons/tick.png' height={20} width={20} /></p>
@@ -33,7 +33,7 @@ const Suggested = ({ user }: UserCardProps) => {
 
     </Link>
     
-    <Button type="button" size="sm" className="shad-button_primary px-5">
+    <Button type="button" size="sm" className="hidden md:block shad-button_primary px-5">
         Follow
       </Button>
     </div>

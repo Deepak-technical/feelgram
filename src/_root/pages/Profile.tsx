@@ -118,18 +118,30 @@ const Profile = () => {
           />
           <div className='flex flex-col flex-1 justify-between md:mt-2'>
             <div className='flex flex-col w-full'>
-              <h1 className='text-center xl:text-left h3-bold md:h1-semibold w-full'>
-                {currentUser.name}
+              <h1 className='text-center inline-flex items-center gap-x-2 xl:text-left h3-bold md:h1-semibold w-full'>
+                {currentUser.name}      {currentUser.emailVerified ? (
+                              <p>
+                                <img
+                                  src='/assets/icons/tick.png'
+                                  height={28}
+                                  width={28}
+                                />
+                              </p>
+                            ) : (
+                              <></>
+                            )}
               </h1>
+
               <p className='small-regular md:body-medium text-light-3 text-center xl:text-left'>
                 @{currentUser.username}
               </p>
+
             </div>
 
             <div className='flex gap-8 mt-10 items-center justify-center xl:justify-start flex-wrap z-20'>
               <StatBlock value={currentUser.posts.length} label='Posts' />
-              <StatBlock value={followers.length} label='Followers' />
-              <StatBlock value={following.length} label='Following' />
+              <StatBlock value={following.length} label='Followers' />
+              <StatBlock value={followers.length} label='Following' />
             </div>
 
             <p className='small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm'>

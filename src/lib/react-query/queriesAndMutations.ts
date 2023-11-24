@@ -7,7 +7,7 @@ import {
 
 } from "@tanstack/react-query";
 
-import { createUserAccount,signInAccount,signOutAccount,createPost,getRecentPosts, likePost,savePost,deleteSavedPost,getCurrentUser,getUserById,getPostById,updatePost,deletePost,searchPosts,getInfinitePosts,getUsers,updateUser,getAccount} from "../appwrite/api";
+import updateVerifiedUser, { createUserAccount,signInAccount,signOutAccount,createPost,getRecentPosts, likePost,savePost,deleteSavedPost,getCurrentUser,getUserById,getPostById,updatePost,deletePost,searchPosts,getInfinitePosts,getUsers,updateUser,getAccount} from "../appwrite/api";
 import { INewUser,INewPost,IUpdateUser,IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
 
@@ -31,6 +31,25 @@ export const useSignOutAccount = () => {
     mutationFn: () => signOutAccount(),
   });
 };
+
+
+
+export const useUpdateVerifiedUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn:(user:any)=>updateVerifiedUser(user),
+    onSuccess:()=>{
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
+    }
+  })
+
+}
+
+
+
+
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
@@ -199,9 +218,9 @@ export const useGetUsers = (limit?: number) => {
 };
 export const useGetAccount = () => {
   return useQuery({
-  
-    queryFn: () => getAccount(),
+    queryFn: getAccount,
   });
+
 };
 
 

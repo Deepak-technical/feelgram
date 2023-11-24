@@ -17,6 +17,8 @@ const PostDetails = () => {
   const { user } = useUserContext()
   const { mutate: deletePost } = useDeletePost()
   const navigate = useNavigate()
+  console.log('Delete post', id)
+  console.log('Delete post', post?.imageId)
   const handleDeletePost = () => {
     console.log('Delete post', id)
     console.log('Delete post', post?.imageId)
@@ -93,7 +95,7 @@ const PostDetails = () => {
                     <Button
                       onClick={handleDeletePost}
                       variant='ghost'
-                      className={`ost_details-delete_btn ${
+                      className={`post_details-delete_btn ${
                         user.id !== post?.creator.$id && 'hidden'
                       }`}
                     >

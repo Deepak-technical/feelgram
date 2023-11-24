@@ -22,6 +22,7 @@ import "./globals.css";
 const App = () => {
   return (
     <main className="flex h-screen">
+      <Toaster />
       <Routes>
         {/* public routes */}
         <Route element={<AuthLayout />}>
@@ -44,7 +45,7 @@ const App = () => {
         </Route>
       </Routes>
 
-      <Toaster />
+      
     </main>
   );
 };
