@@ -81,7 +81,7 @@ const RightSidebar =() => {
 
                   <Link to={`/posts/${post.$id}`}>
                     <div className='text-sm py-2 pl-2 text-md text-center'>
-                    {post.captiom.length > 36 ? `${post.captiom.slice(0, 36)}...` : post.captiom}
+                    {post?.captiom?.length > 36 ? `${post.captiom.slice(0, 36)}...` : post.captiom}
                     </div>
                   </Link>
                 </div>
