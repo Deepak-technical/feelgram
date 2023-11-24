@@ -18,7 +18,7 @@ const PostDetails = () => {
   const { mutate: deletePost } = useDeletePost()
   const navigate = useNavigate()
   console.log('Delete post', id)
-  console.log('Delete post', post?.imageId)
+  console.log('Delete post', post)
   const handleDeletePost = () => {
     console.log('Delete post', id)
     console.log('Delete post', post?.imageId)

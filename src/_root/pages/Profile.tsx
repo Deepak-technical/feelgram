@@ -48,7 +48,7 @@ const Profile = () => {
     setFollowers(followersList)
   }, [user,currentUser])
   console.log(following)
-  console.log(followers)
+  console.log(currentUser)
   const handleFollowUser = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
   
@@ -139,9 +139,9 @@ const Profile = () => {
             </div>
 
             <div className='flex gap-8 mt-10 items-center justify-center xl:justify-start flex-wrap z-20'>
-              <StatBlock value={currentUser.posts.length} label='Posts' />
-              <StatBlock value={following.length} label='Followers' />
-              <StatBlock value={followers.length} label='Following' />
+              <StatBlock value={currentUser?.posts2?.length} label='Posts' />
+              <StatBlock value={following?.length} label='Followers' />
+              <StatBlock value={followers?.length} label='Following' />
             </div>
 
             <p className='small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm'>
@@ -192,7 +192,7 @@ const Profile = () => {
           >
             <img
               src={'/assets/icons/posts.svg'}
-              alt='posts'
+              alt='posts2'
               width={20}
               height={20}
             />
@@ -218,7 +218,7 @@ const Profile = () => {
       <Routes>
         <Route
           index
-          element={<GridPostList posts={currentUser.posts} showUser={false} />}
+          element={<GridPostList posts={currentUser.posts2} showUser={false} />}
         />
         {currentUser.$id === user.id && (
           <Route path='/liked-posts' element={<LikedPosts />} />
