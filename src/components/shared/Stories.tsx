@@ -1,6 +1,6 @@
-import React from 'react'
 
-const Stories = ({user}) => {
+
+const Stories = () => {
   return (
     <div>Stories</div>
   )
