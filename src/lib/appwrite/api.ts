@@ -387,7 +387,7 @@ export async function getUserById(userId: string) {
     console.log(error);
   }
 }
-export async function deletePost(postId: string, imageId?: string) {
+export async function deletePost(postId: string, imageId: string) {
   // if (!postId || !imageId) console.log("no data to delete");
 
   try {
@@ -400,7 +400,7 @@ export async function deletePost(postId: string, imageId?: string) {
 
     if (!statusCode) throw Error;
     console.log("Delete post")
-    // await deleteFile(imageId);
+    await deleteFile(imageId);
     console.log(statusCode)
     return { message:"deleted"};
   } catch (error) {
