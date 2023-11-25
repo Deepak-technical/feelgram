@@ -28,9 +28,14 @@ const PostDetails = () => {
   
     return urlObject.toString();
   };
+
+
+  console.log(user?.id)
+  console.log(post?.creator.$id)
   const handleDeletePost = () => {
     console.log('Delete post', id)
     console.log('Delete post', post?.imageId)
+    
 
     if(id){
 
@@ -100,13 +105,10 @@ const PostDetails = () => {
                         height={24}
                       />
                     </Link>
-
-                    <Button
+                    {!(user?.id != post?.creator.$id) &&  <Button
                       onClick={handleDeletePost}
                       variant='ghost'
-                      className={`post_details-delete_btn ${
-                        user.id !== post?.creator.$id && 'hidden'
-                      }`}
+                      className={`post_details-delete_btn hidden` }
                     >
                       <img
                         src={'/assets/icons/delete.svg'}
@@ -114,7 +116,8 @@ const PostDetails = () => {
                         width={24}
                         height={24}
                       />
-                    </Button>
+                    </Button>}
+                   
                   </div>
                 </div>
                 <hr className='border w-full border-dark-4/80' />

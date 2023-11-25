@@ -15,7 +15,7 @@ const Saved = () => {
       },
     }))
     .reverse();
-
+   console.log(currentUser)
   return (
     <div className="saved-container">
       <div className="flex gap-2 w-full max-w-5xl">
