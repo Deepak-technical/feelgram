@@ -52,7 +52,7 @@ const Home = () => {
                     <Loader />
                   )}
                 </div>
-                <h2 className='h3-bold md:h2-bold text-left w-full'>
+                <h2 data-testid="cypress-title" className='h3-bold md:h2-bold text-left w-full'>
                   Home Feed
                 </h2>
                 <ul className='flex flex-col flex-1 gap-9 w-full'>
