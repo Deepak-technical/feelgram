@@ -19,13 +19,13 @@ const RightSidebar =() => {
     return
   }
 
-  const suggestedUsers = creators?.documents.slice(1, 3)
+  const suggestedUsers = creators?.documents.slice(1, 4)
   const trendingPosts = posts?.documents.filter(posts => posts.likes.length > 5)
   console.log(trendingPosts)
   return (
     <>
-      <div className='hidden md:flex flex-col w-3/12'>
-        <div className='trending h-7/12 overflow-scroll custom-scrollbar'>
+      <div className='hidden md:flex flex-col justify-between w-[440px]'>
+        <div className='trending  h-7/12 overflow-scroll custom-scrollbar '>
           <h2 className='pt-4 pl-8 text-center text-2xl text-white font-semibold '>
             Trending Posts
           </h2>
@@ -89,8 +89,8 @@ const RightSidebar =() => {
             </div>
           )}
         </div>
-        <div className='suggest-users h-1/2'>
-          <h2 className='py-4 pl-8 text-left text-xl text-white font-semibold '>
+        <div className='suggest-users h-1/2 border-t-2 bg-dark-2 border-dark-4'>
+          <h2 className='py-6 pl-8 text-center  text-2xl text-white font-semibold '>
             Suggested Users
           </h2>
 

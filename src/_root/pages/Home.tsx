@@ -4,10 +4,22 @@ import { useGetRecentPosts } from '@/lib/react-query/queriesAndMutations'
 import { Models } from 'appwrite'
 import PostCard from '@/components/shared/PostCard'
 import { useGetUsers } from '@/lib/react-query/queriesAndMutations'
+import { useUserContext } from '@/context/AuthContext'
 
 const Home = () => {
+
+
   const { data: posts, isLoading: isPostLoading } = useGetRecentPosts()
-  const { data: creators} = useGetUsers()
+  const { data: creators } = useGetUsers()
+  const { user,isLoading:userIsLoading } = useUserContext();
+  console.log(userIsLoading)
+  console.log(creators)
+  console.log(user)
+  const filteredPosts = creators?.documents.filter(
+    creator => creator.$id !== user.id
+  )
+
+  console.log('filtered posts', filteredPosts)
 
   return (
     <>
@@ -22,12 +34,24 @@ const Home = () => {
                   Stories
                 </h2>
                 <div className='flex flex-row gap-x-4 overflow-scroll custom-scrollbar pb-4'>
-                  {creators?.documents.map((post: Models.Document) => (
+                  {posts? (<>
+                  {!userIsLoading &&   <img
+                      src={user.imageUrl}
+                      className='rounded-full h-16 w-16 md:h-16 md:w-16 border-2 p-1 border-pink-400'
+                    />}
+                  
+                    {filteredPosts?.map((post: Models.Document) => (
                     <img
                       src={post.imageUrl}
                       className='rounded-full h-16 w-16 md:h-16 md:w-16 border-2 p-1 border-pink-400'
                     />
                   ))}
+                  </>):(
+                    <Loader/>
+                  )
+                
+                  }
+                  
                 </div>
                 <h2 className='h3-bold md:h2-bold text-left w-full'>
                   Home Feed

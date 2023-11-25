@@ -118,7 +118,7 @@ const Profile = () => {
           />
           <div className='flex flex-col flex-1 justify-between md:mt-2'>
             <div className='flex flex-col w-full'>
-              <h1 className='text-center inline-flex items-center gap-x-2 xl:text-left h3-bold md:h1-semibold w-full'>
+              <h1 className='text-center inline-flex items-center justify-center md:justify-start gap-x-2 xl:text-left h3-bold md:h1-semibold w-full'>
                 {currentUser.name}      {currentUser.emailVerified ? (
                               <p>
                                 <img

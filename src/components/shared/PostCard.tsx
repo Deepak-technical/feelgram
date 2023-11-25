@@ -12,6 +12,16 @@ type PostCardProps = {
 const PostCard = ({ post }: PostCardProps) => {
   const { user } = useUserContext();
   console.log(post);
+  const removeUnnecessaryParams = (url:string) => {
+    const urlObject = new URL(url);
+    const paramsToDelete = ['width', 'height', 'gravity', 'quality']; // Add other parameters to delete here if needed
+  
+    paramsToDelete.forEach(param => {
+      urlObject.searchParams.delete(param);
+    });
+  
+    return urlObject.toString();
+  };
   if (!post.creator) return;
 
   return (
@@ -82,7 +92,7 @@ const PostCard = ({ post }: PostCardProps) => {
         </div>
 
         <img
-          src={post.imageUrl || "/assets/icons/profile-placeholder.svg"}
+          src={removeUnnecessaryParams(post?.imageUrl) || "/assets/icons/profile-placeholder.svg"}
           alt="post image"
           className="post-card_img"
         />

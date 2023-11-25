@@ -40,7 +40,7 @@ const LeftSidebar = () => {
         </Link>
 
         {isLoading || !user.email ? (
-          <div className='h-14'>
+          <div className='h-14 flex justify-center'>
             <Loader />
           </div>
         ) : (
