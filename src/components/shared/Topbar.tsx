@@ -2,13 +2,25 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "../ui/button";
-import { useUserContext } from "@/context/AuthContext";
+import { useUserContext, INITIAL_USER } from '@/context/AuthContext'
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
 
 const Topbar = () => {
   const navigate = useNavigate();
-  const { user } = useUserContext();
-  const { mutate: signOut, isSuccess } = useSignOutAccount();
+ 
+  const { user, setUser, setIsAuthenticated } = useUserContext()
+  const { mutate: signOut,isSuccess } = useSignOutAccount()
+  
+  console.log('current status', user)
+  const handleSignOut = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault()
+    signOut()
+    setIsAuthenticated(false)
+    setUser(INITIAL_USER)
+    navigate('/sign-in')
+  }
 
   useEffect(() => {
     if (isSuccess) navigate(0);
@@ -30,7 +42,7 @@ const Topbar = () => {
           <Button
             variant="ghost"
             className="shad-button_ghost"
-            onClick={()=>signOut()}
+            onClick={e => handleSignOut(e)}
             >
             <img src="/assets/icons/logout.svg" alt="logout" />
           </Button>

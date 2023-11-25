@@ -16,16 +16,26 @@ const GridPostList = ({
   showStats = true,
 }: GridPostListProps) => {
   const { user } = useUserContext();
+  const removeUnnecessaryParams = (url:string) => {
+    const urlObject = new URL(url);
+    const paramsToDelete = ['width', 'height', 'gravity', 'quality']; // Add other parameters to delete here if needed
+  
+    paramsToDelete.forEach(param => {
+      urlObject.searchParams.delete(param);
+    });
+  
+    return urlObject.toString();
+  };
 
   return (
     <ul className="grid-container">
       {posts.map((post) => (
-        <li key={post.$id} className="relative min-w-80 h-80">
+        <li key={post.$id} className="relative min-w-80 h-auto">
           <Link to={`/posts/${post.$id}`} className="grid-post_link">
             <img
-              src={post.imageUrl}
+              src={removeUnnecessaryParams(post.imageUrl)}
               alt="post"
-              className="h-full w-full object-cover"
+              className="h-auto w-auto object-cover"
             />
           </Link>
 

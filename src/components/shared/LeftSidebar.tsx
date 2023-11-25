@@ -12,7 +12,7 @@ const LeftSidebar = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { user, setUser, setIsAuthenticated, isLoading } = useUserContext()
-  // const { data: currentAccountData } = useGetAccount()
+ 
   
 
   const { mutate: signOut } = useSignOutAccount()
