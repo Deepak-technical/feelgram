@@ -7,7 +7,6 @@ import {
   useLocation
 } from 'react-router-dom'
 
-
 import { Button } from '@/components/ui/button'
 import { LikedPosts } from '@/_root/pages'
 import { useUserContext } from '@/context/AuthContext'
@@ -33,10 +32,10 @@ const StatBlock = ({ value, label }: StabBlockProps) => (
 
 const Profile = () => {
   const { id } = useParams<{ id: string }>()
-  const { user } = useUserContext();
-  const { pathname } = useLocation();
+  const { user } = useUserContext()
+  const { pathname } = useLocation()
 
-  const { data: currentUser } = useGetUserById(id||"")
+  const { data: currentUser } = useGetUserById(id || '')
   const [following, setFollowings] = useState<string[]>([])
   const [followers, setFollowers] = useState<string[]>([])
   useEffect(() => {
@@ -46,57 +45,59 @@ const Profile = () => {
     console.log(follwingList)
     setFollowings(follwingList)
     setFollowers(followersList)
-  }, [user,currentUser])
+  }, [user, currentUser])
   console.log(following)
   console.log(currentUser)
-  const handleFollowUser = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-  
+  const handleFollowUser = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation()
+
     if (following && followers) {
-      let updatedFollowing = [...following];
-      let updatedFollowers = [...followers];
-      console.log(updatedFollowing,updatedFollowers)
-  
+      let updatedFollowing = [...following]
+      let updatedFollowers = [...followers]
+      console.log(updatedFollowing, updatedFollowers)
+
       if (currentUser?.$id) {
-        const isFollowing = updatedFollowing.includes(currentUser.$id);
-        const isFollower = updatedFollowers.includes(currentUser.$id);
-  
+        const isFollowing = updatedFollowing.includes(currentUser.$id)
+        const isFollower = updatedFollowers.includes(currentUser.$id)
+
         if (isFollowing) {
-          console.log("Unfollow user");
-          updatedFollowing = updatedFollowing.filter(id => id !== currentUser.$id);
-          setFollowings(updatedFollowing);
-          followUser(user.id, updatedFollowing); // Update user's following list
-  
+          console.log('Unfollow user')
+          updatedFollowing = updatedFollowing.filter(
+            id => id !== currentUser.$id
+          )
+          setFollowings(updatedFollowing)
+          followUser(user.id, updatedFollowing) // Update user's following list
+
           if (isFollower) {
-            updatedFollowers = updatedFollowers.filter(id => id !== currentUser.$id);
-            setFollowers(updatedFollowers);
-            setFollowersList(currentUser.$id, updatedFollowers); // Update user's followers list
+            updatedFollowers = updatedFollowers.filter(
+              id => id !== currentUser.$id
+            )
+            setFollowers(updatedFollowers)
+            setFollowersList(currentUser.$id, updatedFollowers) // Update user's followers list
           }
-  
-          console.log("Updated following", updatedFollowing);
-          console.log("Updated followers", updatedFollowers);
+
+          console.log('Updated following', updatedFollowing)
+          console.log('Updated followers', updatedFollowers)
         } else {
-          console.log("Follow user");
-          updatedFollowing.push(currentUser.$id);
-          setFollowings(updatedFollowing);
-          followUser(user.id, updatedFollowing); // Update user's following list
-  
+          console.log('Follow user')
+          updatedFollowing.push(currentUser.$id)
+          setFollowings(updatedFollowing)
+          followUser(user.id, updatedFollowing) // Update user's following list
+
           if (!isFollower) {
-            updatedFollowers.push(currentUser.$id);
-            setFollowers(updatedFollowers);
-            setFollowersList(currentUser.$id, updatedFollowers); // Update user's followers list
+            updatedFollowers.push(currentUser.$id)
+            setFollowers(updatedFollowers)
+            setFollowersList(currentUser.$id, updatedFollowers) // Update user's followers list
           }
-  
-          console.log("Updated following", updatedFollowing);
-          console.log("Updated followers", updatedFollowers);
+
+          console.log('Updated following', updatedFollowing)
+          console.log('Updated followers', updatedFollowers)
         }
       }
     }
-  };
-  
-  
-  
-  
+  }
 
   if (!currentUser || !following)
     return (
@@ -119,26 +120,22 @@ const Profile = () => {
           <div className='flex flex-col flex-1 justify-between md:mt-2'>
             <div className='flex flex-col w-full'>
               <h1 className='text-center inline-flex items-center justify-center md:justify-start gap-x-2 xl:text-left h3-bold md:h1-semibold w-full'>
-                {currentUser.name}      {currentUser.emailVerified ? (
-                              <p>
-                                <img
-                                  src='/assets/icons/tick.png'
-                                  height={28}
-                                  width={28}
-                                />
-                              </p>
-                            ) : (
-                              <></>
-                            )}
+                {currentUser.name}{' '}
+                {currentUser.emailVerified ? (
+                  <p>
+                    <img src='/assets/icons/tick.png' height={28} width={28} />
+                  </p>
+                ) : (
+                  <></>
+                )}
               </h1>
 
               <p className='small-regular md:body-medium text-light-3 text-center xl:text-left'>
                 @{currentUser.username}
               </p>
-
             </div>
 
-            <div className='flex gap-8 mt-10 items-center justify-center xl:justify-start flex-wrap z-20'>
+            <div className='flex gap-8 lg:gap-4 mt-10 items-center justify-center xl:justify-start flex-wrap z-20'>
               <StatBlock value={currentUser?.posts2?.length} label='Posts' />
               <StatBlock value={following?.length} label='Followers' />
               <StatBlock value={followers?.length} label='Following' />
@@ -170,7 +167,7 @@ const Profile = () => {
             </div>
             <div className={`${user.id === id && 'hidden'}`}>
               <Button
-                onClick={e =>handleFollowUser(e)}
+                onClick={e => handleFollowUser(e)}
                 className='shad-button_primary px-8'
               >
                 {checkIsFollowing(following, currentUser?.$id)

@@ -24,7 +24,7 @@ const RightSidebar =() => {
   console.log(trendingPosts)
   return (
     <>
-      <div className='hidden md:flex flex-col justify-between w-[440px]'>
+      <div className='hidden lg:flex md:hidden flex-col justify-between lg:w-[420px]'>
         <div className='trending  h-7/12 overflow-scroll custom-scrollbar '>
           <h2 className='pt-4 pl-8 text-center text-2xl text-white font-semibold '>
             Trending Posts

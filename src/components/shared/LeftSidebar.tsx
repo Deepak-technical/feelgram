@@ -56,7 +56,7 @@ const LeftSidebar = () => {
               <p className='body-bold'>{user.name}</p>
               {user.emailVerified ? (
                 <p>
-                <img src='/assets/icons/tick.png' height={28} width={28} /></p>
+                <img src='/assets/icons/tick.png' height={20} width={20} /></p>
               ) : (
                 <></>
               )}</div>
