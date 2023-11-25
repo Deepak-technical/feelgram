@@ -17,8 +17,17 @@ const PostDetails = () => {
   const { user } = useUserContext()
   const { mutate: deletePost } = useDeletePost()
   const navigate = useNavigate()
-  console.log('Delete post', id)
-  console.log('Delete post', post)
+
+  const removeUnnecessaryParams = (url:string) => {
+    const urlObject = new URL(url);
+    const paramsToDelete = ['width', 'height', 'gravity', 'quality']; // Add other parameters to delete here if needed
+  
+    paramsToDelete.forEach(param => {
+      urlObject.searchParams.delete(param);
+    });
+  
+    return urlObject.toString();
+  };
   const handleDeletePost = () => {
     console.log('Delete post', id)
     console.log('Delete post', post?.imageId)
@@ -47,7 +56,7 @@ const PostDetails = () => {
         ) : (
           <>
             <div className='post_details-card'>
-              <img src={post?.imageUrl} alt='' className='post_details-img' />
+              <img src={removeUnnecessaryParams(post?.imageUrl)} alt='' className='post_details-img' />
 
               <div className='post_details-info'>
                 <div className='flex-between w-full'>
