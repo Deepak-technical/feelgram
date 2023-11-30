@@ -7,7 +7,7 @@ import {
 
 } from "@tanstack/react-query";
 
-import updateVerifiedUser, { createUserAccount,signInAccount,signOutAccount,createPost,getRecentPosts, likePost,savePost,deleteSavedPost,getCurrentUser,getUserById,getPostById,updatePost,deletePost,searchPosts,getInfinitePosts,getUsers,updateUser,getAccount} from "../appwrite/api";
+import updateVerifiedUser, { createUserAccount,signInAccount,signOutAccount,createPost,getRecentPosts, likePost,savePost,deleteSavedPost,getCurrentUser,getUserById,getPostById,updatePost,deletePost,searchPosts,getInfinitePosts,getUsers,updateUser,getAccount, addComments} from "../appwrite/api";
 import { INewUser,INewPost,IUpdateUser,IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
 
@@ -55,6 +55,17 @@ export const useCreatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (post: INewPost) => createPost(post),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+      });
+    },
+  });
+};
+export const useAddComments = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ comment, postId }: { comment: string[]; postId: string }) => addComments(comment, postId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],

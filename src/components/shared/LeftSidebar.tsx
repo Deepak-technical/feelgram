@@ -11,7 +11,7 @@ import { useUserContext, INITIAL_USER } from '@/context/AuthContext'
 const LeftSidebar = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const { user, setUser, setIsAuthenticated, isLoading } = useUserContext()
+  const { user, setUser, setIsAuthenticated, isLoading } = useUserContext();
  
   
 

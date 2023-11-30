@@ -73,7 +73,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
 
   return (
     <div
-      className={`flex justify-between items-center z-20 ${containerStyles}`}>
+      className={`flex justify-start items-center z-20 ${containerStyles}`}>
       <div className="flex gap-2 mr-5">
         <img
           src={`${
@@ -87,7 +87,18 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
           onClick={(e) => handleLikePost(e)}
           className="cursor-pointer"
         />
-        <p className="small-medium lg:base-medium">{likes.length}</p>
+        <p className="small-medium lg:base-medium">{likes.length} <span className="">likes</span></p>
+      </div>
+      <div className="flex gap-2 mr-5">
+        <img
+          src='/assets/icons/bubble-chat.png'
+          alt="like"
+          width={25}
+          height={20}
+          onClick={(e) => handleLikePost(e)}
+          className="cursor-pointer"
+        />
+        <p className="small-medium lg:base-medium flex items-center">{post.comments.length}<span className="hidden md:inline"> Comments</span></p>
       </div>
 
       <div className="flex gap-2">
@@ -99,6 +110,8 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
           className="cursor-pointer"
           onClick={(e) => handleSavePost(e)}
         />
+        <span className="hidden md:inline">{isSaved ? "Saved":"Save"}</span>
+        
       </div>
     </div>
   );

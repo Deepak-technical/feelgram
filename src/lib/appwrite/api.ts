@@ -559,3 +559,22 @@ export default async function updateVerifiedUser(user: IUpdateVerifiedUser ){
   }
 
 }
+
+export  async function addComments(commentsArray:string[],postId:string){
+  try {
+
+      const updatedComments = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      postId,
+      {
+        comments:commentsArray,
+      }
+    );
+
+    if(!updatedComments) throw Error;
+    return updatedComments.comments;
+  } catch (error) {
+    console.log(error)
+  }
+}
