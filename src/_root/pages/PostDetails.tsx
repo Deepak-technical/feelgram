@@ -42,7 +42,7 @@ const PostDetails = () => {
   const jsoncomments = post?.comments?.map((commentString: string) => {
     return JSON.parse(commentString)
   })
-  const [comments, setComments] = useState(jsoncomments|| [])
+  const [comments, setComments] = useState(jsoncomments || [])
   useEffect(() => {
     setComments(jsoncomments)
   }, [post])
@@ -220,52 +220,62 @@ const PostDetails = () => {
                     ))}
                   </ul>
                 </div>
+                <div className='w-full'>
+                  <PostStats post={post} userId={user.id} />
+                </div>
                 <h3 className='text-white  text-md md:text-lg font-semibold'>
                   {'  '}Comments
                 </h3>
                 {comments?.length > 0 ? (
                   <div className='w-full  h-36 md:h-48 overflow-scroll custom-scrollbar'>
-                    {comments?.map((comment: any) => (
-                      <>
-                        <div className='comments pb-2 mb:pb-8 border-t-2 bg-dark-2 border-dark-4'>
-                          <div className='flex items-center gap-x-2 py-2 md:gap-x-4 md:py-4'>
-                            <img
-                              src={comment?.userImg}
-                              alt='Image'
-                              height={24}
-                              width={24}
-                              className='rounded-full'
-                            />
-                            <p className='text-white text-md hidden md:inline'>
-                              {comment?.name}
-                            </p>
-                            <p className='text-light-3 text-xs md:text-sm flex flex-row items-center  gap-x-1'>
-                              @{comment?.username}{' '}
-                              {comment?.isVerified ? (
-                                <p>
-                                  <img
-                                    src='/assets/icons/tick.png'
-                                    height={12}
-                                    width={12}
-                                  />
-                                </p>
-                              ) : (
-                                <></>
-                              )}
-                            </p>
-                            <p className=' text-light-2 text-xs'>
-                              {' '}
-                              {multiFormatDateString(comment?.createdAt)}
-                            </p>
+                    {comments
+                      ?.slice() // create a copy of the original array
+                      .sort(
+                        (a:any, b:any) =>
+                          new Date(b.createdAt).getTime() -
+                          new Date(a.createdAt).getTime()
+                      )
+                      .map((comment: any) => (
+                        <>
+                          <div className='comments pb-2 mb:pb-8 border-t-2 bg-dark-2 border-dark-4'>
+                            <div className='flex items-center gap-x-2 py-2 md:gap-x-4 md:py-4'>
+                              <img
+                                src={comment?.userImg}
+                                alt='Image'
+                                height={24}
+                                width={24}
+                                className='rounded-full'
+                              />
+                              <p className='text-white text-md hidden md:inline'>
+                                {comment?.name}
+                              </p>
+                              <p className='text-light-3 text-xs md:text-sm flex flex-row items-center  gap-x-1'>
+                                @{comment?.username}{' '}
+                                {comment?.isVerified ? (
+                                  <p>
+                                    <img
+                                      src='/assets/icons/tick.png'
+                                      height={12}
+                                      width={12}
+                                    />
+                                  </p>
+                                ) : (
+                                  <></>
+                                )}
+                              </p>
+                              <p className=' text-light-2 text-xs'>
+                                {' '}
+                                {multiFormatDateString(comment?.createdAt)}
+                              </p>
+                            </div>
+                            <div className='commentMeassage pb-2'>
+                              <p className='text-white text-xs md:text-[0.9rem] pl-8 md:pl-11'>
+                                {comment?.commentMsg}
+                              </p>
+                            </div>
                           </div>
-                          <div className='commentMeassage'>
-                            <p className='text-white text-xs md:text-base pl-8 md:pl-11'>
-                              {comment?.commentMsg}
-                            </p>
-                          </div>
-                        </div>
-                      </>
-                    ))}
+                        </>
+                      ))}
                   </div>
                 ) : (
                   <h2 className='text-center text-white py-2'>
@@ -273,9 +283,6 @@ const PostDetails = () => {
                   </h2>
                 )}
 
-                <div className='w-full'>
-                  <PostStats post={post} userId={user.id} />
-                </div>
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(handleSubmit)}
@@ -287,7 +294,7 @@ const PostDetails = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className='shad-form_label'>
-                            AddComments
+                            Add Comments
                           </FormLabel>
                           <FormControl>
                             <Input

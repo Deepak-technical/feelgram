@@ -149,19 +149,19 @@
 
   /* Post Details */
   .post_details-container {
-    @apply flex flex-col flex-1 gap-10 overflow-scroll py-6 px-4 md:p-16 custom-scrollbar items-center;
+    @apply flex flex-col flex-1 gap-10 overflow-scroll py-6 px-2 md:p-16 custom-scrollbar items-center;
   }
 
   .post_details-card {
-    @apply bg-dark-2 w-full max-w-5xl rounded-[30px] flex-col flex xl:flex-col border border-dark-4 xl:rounded-l-[24px];
+    @apply bg-dark-2 w-full max-w-5xl rounded-[10px] flex-col flex xl:flex-col border border-dark-4 xl:rounded-l-[24px];
   }
 
   .post_details-img {
-    @apply h-auto lg:h-auto xl:w-auto rounded-t-[15px] xl:rounded-l-[px] xl:rounded-tr-none object-cover p-5 bg-dark-1;
+    @apply h-auto lg:h-auto xl:w-auto rounded-t-[15px] xl:rounded-l-[px] xl:rounded-tr-none object-cover p-4 md:p-8 bg-dark-1;
   }
 
   .post_details-info {
-    @apply bg-dark-2 flex flex-col gap-5 lg:gap-7 flex-1 items-start p-8 rounded-[30px];
+    @apply bg-dark-2 flex flex-col gap-5 lg:gap-7 flex-1 items-start  p-4 md:p-8 rounded-[30px];
   }
 
   .post_details-delete_btn {

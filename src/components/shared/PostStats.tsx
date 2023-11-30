@@ -98,7 +98,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
           onClick={(e) => handleLikePost(e)}
           className="cursor-pointer"
         />
-        <p className="small-medium lg:base-medium flex items-center">{post.comments.length}<span className="hidden md:inline"> Comments</span></p>
+        <p className="small-medium lg:base-medium flex items-center">{post.comments.length}<span className="hidden md:inline"> {"  "}Comments</span></p>
       </div>
 
       <div className="flex gap-2">
