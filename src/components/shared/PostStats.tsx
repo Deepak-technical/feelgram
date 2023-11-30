@@ -89,7 +89,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
         />
         <p className="small-medium lg:base-medium">{likes.length} <span className="">likes</span></p>
       </div>
-      <div className="flex gap-2 mr-5">
+      <div className="flex gap-2 mr-5 ">
         <img
           src='/assets/icons/bubble-chat.png'
           alt="like"

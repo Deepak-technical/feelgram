@@ -3,7 +3,6 @@ import {
   useGetPostById
 } from '@/lib/react-query/queriesAndMutations'
 
-
 import Loader from '@/components/shared/Loader'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
@@ -33,21 +32,20 @@ import { PostReply } from '@/lib/validation'
 import { useEffect, useState } from 'react'
 const PostDetails = () => {
   const { id } = useParams()
-  const { mutate: updatedCommentsPost, isLoading: isAddedComment } =useAddComments()
-  const { data: currentUser} = useGetCurrentUser()
+  const { mutate: updatedCommentsPost, isLoading: isAddedComment } =
+    useAddComments()
+  const { data: currentUser } = useGetCurrentUser()
   console.log(currentUser)
   const { toast } = useToast()
   const { data: post, isLoading: isPending } = useGetPostById(id || '')
 
-  const jsoncomments = post?.comments?.map(
-    (commentString: string) => {
-      return JSON.parse(commentString)
-    }
-  )
+  const jsoncomments = post?.comments?.map((commentString: string) => {
+    return JSON.parse(commentString)
+  })
   const [comments, setComments] = useState(jsoncomments)
-  useEffect(()=>{
+  useEffect(() => {
     setComments(jsoncomments)
-  },[post])
+  }, [post])
   const { user } = useUserContext()
   const { mutate: deletePost } = useDeletePost()
   const navigate = useNavigate()
@@ -222,42 +220,58 @@ const PostDetails = () => {
                     ))}
                   </ul>
                 </div>
-                <h3 className='text-white  text-md md:text-lg font-semibold'>{" "}Comments</h3>
-                <div className='w-full h-48 overflow-scroll custom-scrollbar'>
-                  {comments?.map((comment: any) => (
-                    <>
-                      <div className='comments pb-2 mb:pb-8 border-t-2 bg-dark-2 border-dark-4'>
-                        <div className='flex items-center gap-x-2 py-2 md:gap-x-4 md:py-4'>
-                          <img
-                            src={comment?.userImg}
-                            alt='Image'
-                            height={24}
-                            width={24}
-                            className='rounded-full'
-                          />
-                          <p className='text-white text-md hidden md:inline'>{comment?.name}</p>
-                          <p className='text-light-3 text-xs md:text-sm flex flex-row items-center  gap-x-1'>@{comment?.username}  {comment?.isVerified ? (
-                            <p>
-                              <img
-                                src='/assets/icons/tick.png'
-                                height={12}
-                                width={12}
-                              />
+                <h3 className='text-white  text-md md:text-lg font-semibold'>
+                  {'  '}Comments
+                </h3>
+                {comments.length > 0 ? (
+                  <div className='w-full  h-36 md:h-48 overflow-scroll custom-scrollbar'>
+                    {comments?.map((comment: any) => (
+                      <>
+                        <div className='comments pb-2 mb:pb-8 border-t-2 bg-dark-2 border-dark-4'>
+                          <div className='flex items-center gap-x-2 py-2 md:gap-x-4 md:py-4'>
+                            <img
+                              src={comment?.userImg}
+                              alt='Image'
+                              height={24}
+                              width={24}
+                              className='rounded-full'
+                            />
+                            <p className='text-white text-md hidden md:inline'>
+                              {comment?.name}
                             </p>
-                          ) : (
-                            <></>
-                          )}</p>
-                          <p className=' text-light-2 text-xs'> {multiFormatDateString(comment?.createdAt)}</p>
-                         
+                            <p className='text-light-3 text-xs md:text-sm flex flex-row items-center  gap-x-1'>
+                              @{comment?.username}{' '}
+                              {comment?.isVerified ? (
+                                <p>
+                                  <img
+                                    src='/assets/icons/tick.png'
+                                    height={12}
+                                    width={12}
+                                  />
+                                </p>
+                              ) : (
+                                <></>
+                              )}
+                            </p>
+                            <p className=' text-light-2 text-xs'>
+                              {' '}
+                              {multiFormatDateString(comment?.createdAt)}
+                            </p>
+                          </div>
+                          <div className='commentMeassage'>
+                            <p className='text-white text-xs md:text-base pl-8 md:pl-11'>
+                              {comment?.commentMsg}
+                            </p>
+                          </div>
                         </div>
-                        <div className="commentMeassage">
-                          <p className='text-white text-xs md:text-base pl-8 md:pl-11'>{comment?.commentMsg}</p>
-                          
-                        </div>
-                      </div>
-                    </>
-                  ))}
-                </div>
+                      </>
+                    ))}
+                  </div>
+                ) : (
+                  <h2 className='text-center text-white py-2'>
+                    No commnets yet
+                  </h2>
+                )}
 
                 <div className='w-full'>
                   <PostStats post={post} userId={user.id} />
@@ -281,7 +295,6 @@ const PostDetails = () => {
                               placeholder='Enter your comments'
                               {...field}
                             />
-                            
                           </FormControl>
                           <FormMessage className='shad-form_message' />
                         </FormItem>
@@ -300,11 +313,8 @@ const PostDetails = () => {
                         type='submit'
                         className='shad-button_primary whitespace-nowrap'
                         disabled={isAddedComment}
-                        
                       >
-                        {(isAddedComment) && <Loader />}
-                        {' '}
-                        Comment
+                        {isAddedComment && <Loader />} Comment
                       </Button>
                     </div>
                   </form>
