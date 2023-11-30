@@ -42,7 +42,7 @@ const PostDetails = () => {
   const jsoncomments = post?.comments?.map((commentString: string) => {
     return JSON.parse(commentString)
   })
-  const [comments, setComments] = useState(jsoncomments)
+  const [comments, setComments] = useState(jsoncomments|| [])
   useEffect(() => {
     setComments(jsoncomments)
   }, [post])
@@ -223,7 +223,7 @@ const PostDetails = () => {
                 <h3 className='text-white  text-md md:text-lg font-semibold'>
                   {'  '}Comments
                 </h3>
-                {comments.length > 0 ? (
+                {comments?.length > 0 ? (
                   <div className='w-full  h-36 md:h-48 overflow-scroll custom-scrollbar'>
                     {comments?.map((comment: any) => (
                       <>
