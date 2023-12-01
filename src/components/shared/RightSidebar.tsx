@@ -26,9 +26,12 @@ const RightSidebar =() => {
     <>
       <div className='hidden lg:flex md:hidden flex-col justify-between lg:w-[420px]'>
         <div className='trending  h-7/12 overflow-scroll custom-scrollbar '>
-          <h2 className='pt-4 pl-8 text-center text-2xl text-white font-semibold '>
+          <div className="trend-header flex items-center justify-center gap-x-4 pt-6 pb-4">
+          <img src="/assets/icons/trend.png" alt="" height={36} width={36}/>
+          <h2 className=' text-center text-2xl text-white font-semibold '>
             Trending Posts
           </h2>
+          </div>
           {isPostLoading && !posts ? (
             <Loader />
           ) : (
