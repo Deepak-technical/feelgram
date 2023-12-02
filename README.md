@@ -1,5 +1,8 @@
 
-
+<!-- Banner Image -->
+<p align="center">
+  <img src="finallogo.png" alt="Social Media App Banner" width="50%">
+</p>
 
 <!-- Banner Image -->
 ![Screenshot](preview.png)
