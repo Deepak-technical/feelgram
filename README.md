@@ -2,9 +2,7 @@
 
 
 <!-- Banner Image -->
-<p align="center">
-  <img src="https://drive.google.com/file/d/1AKUaXx1leuPwBT6wctu9pfoCCQb_2HpS/view" alt="Social Media App Banner">
-</p>
+![Screenshot](preview.png)
 
 # SnapSphere - An Social Media App
 
@@ -87,4 +85,3 @@ This project is licensed under the [MIT License](link-to-your-license-file).
 Thank you for exploring our Social Media App! Your feedback and contributions are greatly appreciated as we strive to create an exceptional social networking experience.
 ```
 
-Ensure you replace `https://example.com/link-to-your-banner-image.png` with the actual link to your banner image, and update other placeholders such as `your-username`, `link-to-your-contributing-guide.md`, and `link-to-your-license-file` with appropriate information relevant to your project. This README provides a comprehensive overview of the app, its features, technologies used, how to get started, contributions, and licensing information. Adjust it further to suit your project's specifics and needs.
