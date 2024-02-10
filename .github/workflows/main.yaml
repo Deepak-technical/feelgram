@@ -42,7 +42,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Docker File Scan
-      uses: aquasecurity/trivy-action@latest
+      uses: aquasecurity/trivy-action@master
       with:
         target: .
         vuln-type: "os,library"
