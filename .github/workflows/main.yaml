@@ -53,7 +53,7 @@ jobs:
         docker tag deepakprasad/snapsphere-v1 deepakprasad/snapsphere-v1:latest
 
     - name: Docker Container Scan
-      uses: aquasecurity/trivy-action@v1
+      uses: aquasecurity/trivy-action@master
       with:
         image-ref: deepakprasad/snapsphere-v1:latest
 
