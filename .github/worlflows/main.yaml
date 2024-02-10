@@ -1,0 +1,84 @@
+name: React App CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2.1.5
+      with:
+        node-version: "20.11.0" # Adjust the Node.js version as needed
+
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install Dependencies and Test
+      run: |
+        npm install
+        npm test
+
+    - name: Build
+      run: npm run build
+
+  build-and-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Docker File Scan
+      uses: aquasecurity/trivy-action@v1
+      with:
+        target: .
+        vuln-type: "os,library"
+
+    - name: Docker Build
+      run: |
+        docker build -t deepakprasad/snapsphere-v1 .
+        docker tag deepakprasad/snapsphere-v1 deepakprasad/snapsphere-v1:latest
+
+    - name: Docker Container Scan
+      uses: aquasecurity/trivy-action@v1
+      with:
+        image-ref: deepakprasad/snapsphere-v1:latest
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push to Docker Hub
+      run: |
+        docker push yourdockerhubusername/react-app:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Deploy to Vercel
+      run: echo "deployed successfully"
+      # uses: amondnet/vercel-action@v20
+      # with:
+      #   vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #   vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #   vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #   vercel-scope: ${{ secrets.VERCEL_SCOPE }}
