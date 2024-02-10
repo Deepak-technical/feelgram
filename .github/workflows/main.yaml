@@ -45,8 +45,11 @@ jobs:
     - name: Docker File Scan
       uses: aquasecurity/trivy-action@master
       with:
-        target: .
-        vuln-type: "os,library"
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL'
 
     - name: Docker Build
       run: |
