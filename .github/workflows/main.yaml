@@ -29,7 +29,7 @@ jobs:
     - name: Install Dependencies and Test
       run: |
         npm install
-        npm test
+        npm run test
 
     - name: Build
       run: npm run build
